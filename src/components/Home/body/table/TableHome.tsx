@@ -1,10 +1,17 @@
+"use client";
 import React from 'react'
+import { useRouter } from 'next/navigation';
 
 const TableHome = () => {
+    const agregar=useRouter()
+
+    const add=()=>{   
+        agregar.push("/Agregar")
+    }
   return (
     <div className='w-full '>
         <div className='flex-row pb-5 gap-4'>
-            <button className=' py-2 px-4 bg-green-600 rounded-2xl'>AGREGAR</button>
+            <button onClick={()=>add()} className=' py-2 px-4 bg-green-600 rounded-2xl'>AGREGAR</button>
         </div>
 
         <div className='text-center'>

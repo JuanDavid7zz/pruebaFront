@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react'
-import Caja from '../caja/caja';
 import Anuncio from '../anuncio/Anuncio';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';    //Rutas
@@ -12,13 +11,13 @@ export const FormLogin = () => {
     const route=useRouter()
    
     const abrirmodal=()=>{ console.log( "hola")   
-        toast.success('Successfully toasted!')
+        toast.success('Successfully add!')
         route.push("/home")
     }
     return (
       <div className="flex justify-center items-center min-h-screen ">
             <div className="flex flex-col justify-between h-[350px] p-6 bg-white text-center shadow-lg rounded-lg">
-                <h5 className="text-xl font-bold">Login</h5>
+                <h1 className="text-xl font-bold">Login</h1>
         
                 <div className="space-y-4">
                     <div>
