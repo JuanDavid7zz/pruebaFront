@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react'
-import FormAdd from './FormAdd/FormAdd'
+import FormAdd from './formAdd/FormAdd'
 
 const IndexAdd = () => {
   return (
