@@ -3,10 +3,10 @@ import TableHome from './table/TableHome'
 
 const Body = () => {
   return (
-    <div className=' bg-blue-100 h-screen'>
-       <div className='bg-blue-100 p-10 min-h-screen flex flex-col gap-5'>
+    <div className=' bg-color:#F8F9FA h-screen'>
+       <div className='bg-[#F8F9FA] p-10 min-h-screen flex flex-col gap-5'>
             <div className='pb-8'>
-                <h2 className='text-center text-5xl font-bold text-gray-800'>
+                <h2 className='text-center text-5xl font-bold text-[#2C3E50]'>
                   WELCOME TO HOME
                 </h2>
             </div>

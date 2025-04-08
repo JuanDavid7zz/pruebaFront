@@ -1,52 +1,116 @@
 "use client";
 
-import React from 'react'
+import React, {useState} from 'react'
 import { useRouter } from 'next/navigation'; 
 import toast from 'react-hot-toast';
 
-const FormAdd = () => {
+interface FormAddProps {
+  onClose: () => void;
+}
 
-  const ruta=useRouter()
-  const eliminar=useRouter()
+const FormAdd: React.FC<FormAddProps> = ({ onClose }) => {
   
-  const usarRuta=()=>{ 
-    toast.success('Successfully toasted!')
-    ruta.push("/home")
-  }
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    completed: false
+  });
 
-  const usarEliminar=()=>{ 
-    eliminar.push("/home")
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try 
+    {
+      const response = await fetch('http://localhost:3001/api/tasks', 
+        {
+          method: 'POST',
+          headers: 
+          {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            toast.success('Task added successfully!');
+            onClose(); // Cierra la modal
+        } else {
+          toast.error('Error adding task');
+        }
+    }  catch (error) 
+      {
+        console.error('Error:', error);
+        toast.error('Failed to add task');
+      }
+  };
 
   return (
     <div className='flex justify-center items-center min-h-screen'>
-      <div className='flex flex-col justify-between h-[350px] p-6 bg-white text-center shadow-lg rounded-lg'>
-        <h1 className='text-xl font-bold pb-4'>Add New Task</h1>
-          <div className="space-y-4">
+      <div className='flex flex-col justify-between h-[350px] p-6 bg-[#F8F9FA] text-center shadow-lg rounded-lg'>
+        <h1 className='text-[#2C3E50] font-bold pb-4'>Add New Task</h1>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <h2 className="font-semibold">Task</h2>
-              <input className="bg-gray-300 w-full p-2 rounded-md" />
+              <input
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="bg-gray-300 w-full p-2 rounded-md"
+                required
+              />
             </div>
         
             <div>
               <h2 className="font-semibold">Description</h2>
-              <input className="bg-gray-300 w-full p-2 rounded-md" />
+              <input
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="bg-gray-300 w-full p-2 rounded-md"
+                required
+              />            
             </div>
 
             <div>
               <h2 className="font-semibold">State</h2>
-              <input className="bg-gray-300 w-full p-2 rounded-md" />
+              <input
+                type="checkbox"
+                name="completed"
+                checked={formData.completed}
+                onChange={handleChange}
+                className="p-2"
+              />
+              Completed            
+            </div>
+            <div className='flex gap-4 justify-center pt-4'>
+              <button
+                type="submit"
+                className="font-semibold bg-sky-500 hover:bg-sky-700 text-white px-4 py-2 rounded-lg"
+              >
+                Save
+              </button>
+
+              <button
+                type="button"
+                onClick={onClose} // Llama a la función onClose para cerrar la modal
+                className="font-semibold bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+
+
             </div>
 
-            <button onClick={()=>usarRuta()} className='className="font-semibold bg-sky-500 hover:bg-sky-700 text-white px-4 py-2 rounded-lg'>
-              Save
-            </button>
 
-            <button onClick={()=>usarEliminar()} className='className=" font-semibold bg-red-500  hover:bg-red-700 text-white px-4 py-2 rounded-lg'>
-              Cancel
-            </button>
-
-          </div>
+          </form>
       </div>
     </div>
   )

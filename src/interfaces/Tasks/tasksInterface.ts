@@ -5,7 +5,7 @@ export interface tasksMainInterface {
 
 export interface tasksInterface {
     id: number;
-    title?: string;
-    description?: string;
-    completed?: boolean;
+    title: string;
+    description: string;
+    completed: boolean;
 }
